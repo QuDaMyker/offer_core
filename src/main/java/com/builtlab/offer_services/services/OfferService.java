@@ -35,9 +35,16 @@ public class OfferService {
     }
 
     public OfferResponse createOffer(OfferCreationRequest request) {
+
         Offer offer = offerMapper.toOffer(request);
 
-        return offerMapper.toOfferResponse(offerRepository.save(offer));
+        double originalPrice = offer.getOriginalPrice();
+        double discountPercentage = offer.getDiscountPercentage();
+        double discountedPrice = originalPrice - (originalPrice * discountPercentage / 100.0);
+        offer.setDiscountedPrice(discountedPrice);
+        Offer savedOffer = offerRepository.save(offer);
+
+        return offerMapper.toOfferResponse(savedOffer);
     }
 
     public List<OfferResponse> getAllOffers(int limit, int offset) {
@@ -62,8 +69,8 @@ public class OfferService {
         double originalPrice = offer.getOriginalPrice();
         double discountPercentage = offer.getDiscountPercentage();
         double discountedPrice = originalPrice - (originalPrice * discountPercentage / 100.0);
-
         offer.setDiscountedPrice(discountedPrice);
+
         offer.setUpdatedAt(request.getUpdatedAt() != null ? request.getUpdatedAt() : LocalDateTime.now());
 
         return offerMapper.toOfferResponse(offerRepository.save(offer));

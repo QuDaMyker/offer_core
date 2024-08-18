@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
-@EnableMongoRepositories(basePackages = "com.builtlab.offer_services.repository")
 public class OfferServicesApplication {
 
 	public static void main(String[] args) {

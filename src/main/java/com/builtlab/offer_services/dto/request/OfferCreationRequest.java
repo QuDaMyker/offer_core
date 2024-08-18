@@ -16,7 +16,6 @@ public class OfferCreationRequest {
     String description;
     double discountPercentage;
     double originalPrice;
-    double discountedPrice;
     LocalDateTime createdAt;
     LocalDateTime  updatedAt;
 }
