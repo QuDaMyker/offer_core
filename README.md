@@ -1,4 +1,6 @@
 # Offers
+- Flutter Mobile App: `https://github.com/QuDaMyker/offers`
+- Backedn Spring Boot: `https://github.com/QuDaMyker/offer_core`
 
 ## Overview
 
