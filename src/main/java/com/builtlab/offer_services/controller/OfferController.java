@@ -55,7 +55,6 @@ public class OfferController {
         result.put("totalItems", totalItems);
         result.put("totalPages", totalPages);
 
-        // Create and populate ApiResponse
         ApiResponse<Map<String, Object>> apiResponse = new ApiResponse<>();
         apiResponse.setCode(2000);
         apiResponse.setMessage("Success");
@@ -75,13 +74,24 @@ public class OfferController {
     }
 
 
-    @PutMapping("{offerId}")
-    ApiResponse<OfferResponse> updateOffer(@PathVariable("offerId") String offerId, @RequestBody OfferUpdateRequest request) {
-        return  ApiResponse.<OfferResponse>builder()
+    @PutMapping("/{id}")
+    public ApiResponse<OfferResponse> updateOffer(
+            @PathVariable("id") String id,
+            @RequestBody OfferUpdateRequest updateRequest) {
+
+        OfferResponse offerResponse = offerService.updateOffer(id, updateRequest);
+
+        return ApiResponse.<OfferResponse>builder()
                 .code(ErrorCode.SUCCESS.getCode())
                 .message(ErrorCode.SUCCESS.getMessage())
-                .result(offerService.updateOffer(offerId, request))
+                .result(offerResponse)
                 .build();
+    }
+
+    @DeleteMapping("{offerId}")
+    String deleteUser(@PathVariable("offerId") String offerId) {
+        offerService.deleteOffer(offerId);
+        return "Delete Successful";
     }
 
 }
