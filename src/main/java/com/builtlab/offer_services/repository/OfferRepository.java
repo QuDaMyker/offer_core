@@ -10,4 +10,5 @@ import org.springframework.data.domain.Pageable;
 @Repository
 public interface OfferRepository extends MongoRepository<Offer, String> {
     Page<Offer> findAll(Pageable pageable);
+
 }

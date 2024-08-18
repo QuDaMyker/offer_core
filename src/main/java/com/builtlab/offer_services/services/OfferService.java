@@ -27,6 +27,10 @@ public class OfferService {
     OfferRepository offerRepository;
     OfferMapper offerMapper;
 
+    public long getTotalOfferCount() {
+        return offerRepository.count();
+    }
+
     public OfferResponse createOffer(OfferCreationRequest request) {
         Offer offer = offerMapper.toOffer(request);
 
@@ -34,7 +38,7 @@ public class OfferService {
     }
 
     public List<OfferResponse> getAllOffers(int limit, int offset) {
-        Pageable pageable = PageRequest.of(offset, limit);
+        Pageable pageable = PageRequest.of(offset - 1, limit);
 
         Page<Offer> offerPage = offerRepository.findAll(pageable);
 
