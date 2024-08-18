@@ -42,9 +42,8 @@ public class OfferService {
         double discountPercentage = offer.getDiscountPercentage();
         double discountedPrice = originalPrice - (originalPrice * discountPercentage / 100.0);
         offer.setDiscountedPrice(discountedPrice);
-        Offer savedOffer = offerRepository.save(offer);
-
-        return offerMapper.toOfferResponse(savedOffer);
+        offer.setCreatedAt(LocalDateTime.now());
+        return offerMapper.toOfferResponse(offerRepository.save(offer));
     }
 
     public List<OfferResponse> getAllOffers(int limit, int offset) {
