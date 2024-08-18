@@ -17,6 +17,7 @@ public enum ErrorCode {
     INVALID_TOKEN(1007, "Invalid Token", HttpStatus.FORBIDDEN),
     ACCESS_DENIED(1008, "Access Denied", HttpStatus.FORBIDDEN),
     INVALID_DOB(1009, "Invalid date of birth", HttpStatus.BAD_REQUEST),
+    NOT_FOUND(1010, "Not found", HttpStatus.BAD_REQUEST),
     SUCCESS(2000, "Success", HttpStatus.OK),
     ;
 

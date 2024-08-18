@@ -64,6 +64,15 @@ public class OfferController {
         return apiResponse;
     }
 
+    @GetMapping("/{offerId}")
+    public ApiResponse<OfferResponse> getOffer(@PathVariable("offerId") String offerId) {
+        OfferResponse offerResponse = offerService.getOffer(offerId);
+        return ApiResponse.<OfferResponse>builder()
+                .code(ErrorCode.SUCCESS.getCode())
+                .message(ErrorCode.SUCCESS.getMessage())
+                .result(offerResponse)
+                .build();
+    }
 
 
     @PutMapping("{offerId}")

@@ -4,6 +4,8 @@ import com.builtlab.offer_services.dto.request.OfferCreationRequest;
 import com.builtlab.offer_services.dto.request.OfferUpdateRequest;
 import com.builtlab.offer_services.dto.response.OfferResponse;
 import com.builtlab.offer_services.entity.Offer;
+import com.builtlab.offer_services.exception.AppException;
+import com.builtlab.offer_services.exception.ErrorCode;
 import com.builtlab.offer_services.mapper.OfferMapper;
 import com.builtlab.offer_services.repository.OfferRepository;
 import lombok.AccessLevel;
@@ -46,13 +48,13 @@ public class OfferService {
     }
 
     public OfferResponse getOffer(String id) {
-        Offer offer = offerRepository.findById(id).orElseThrow(null);
+        Offer offer = offerRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND));
 
         return offerMapper.toOfferResponse(offer);
     }
 
     public OfferResponse updateOffer(String id, OfferUpdateRequest request) {
-        Offer offer = offerRepository.findById(id).orElseThrow(null);
+        Offer offer = offerRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND));
         offerMapper.updateOffer(offer, request);
         return offerMapper.toOfferResponse(offerRepository.save(offer));
     }
