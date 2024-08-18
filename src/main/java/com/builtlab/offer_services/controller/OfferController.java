@@ -43,9 +43,7 @@ public class OfferController {
         if (offset < 1) offset = 1;
 
         List<OfferResponse> offers = offerService.getAllOffers(limit, offset);
-
         long totalItems = offerService.getTotalOfferCount();
-
         int totalPages = (int) Math.ceil((double) totalItems / limit);
 
         Map<String, Object> result = new HashMap<>();
