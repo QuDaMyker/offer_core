@@ -29,5 +29,5 @@ public class Offer {
     double originalPrice;
     double discountedPrice;
     LocalDateTime createdAt;
-    LocalDateTime  updatedAt;
+    LocalDateTime updatedAt;
 }

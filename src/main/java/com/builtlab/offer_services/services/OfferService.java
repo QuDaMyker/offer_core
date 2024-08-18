@@ -4,6 +4,8 @@ import com.builtlab.offer_services.dto.request.OfferCreationRequest;
 import com.builtlab.offer_services.dto.request.OfferUpdateRequest;
 import com.builtlab.offer_services.dto.response.OfferResponse;
 import com.builtlab.offer_services.entity.Offer;
+import com.builtlab.offer_services.exception.AppException;
+import com.builtlab.offer_services.exception.ErrorCode;
 import com.builtlab.offer_services.mapper.OfferMapper;
 import com.builtlab.offer_services.repository.OfferRepository;
 import lombok.AccessLevel;
@@ -17,6 +19,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -27,6 +30,10 @@ public class OfferService {
     OfferRepository offerRepository;
     OfferMapper offerMapper;
 
+    public long getTotalOfferCount() {
+        return offerRepository.count();
+    }
+
     public OfferResponse createOffer(OfferCreationRequest request) {
         Offer offer = offerMapper.toOffer(request);
 
@@ -34,7 +41,7 @@ public class OfferService {
     }
 
     public List<OfferResponse> getAllOffers(int limit, int offset) {
-        Pageable pageable = PageRequest.of(offset, limit);
+        Pageable pageable = PageRequest.of(offset - 1, limit);
 
         Page<Offer> offerPage = offerRepository.findAll(pageable);
 
@@ -42,16 +49,21 @@ public class OfferService {
     }
 
     public OfferResponse getOffer(String id) {
-        Offer offer = offerRepository.findById(id).orElseThrow(null);
+        Offer offer = offerRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND));
 
         return offerMapper.toOfferResponse(offer);
     }
 
     public OfferResponse updateOffer(String id, OfferUpdateRequest request) {
-        Offer offer = offerRepository.findById(id).orElseThrow(null);
+        Offer offer = offerRepository.findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND));
+
         offerMapper.updateOffer(offer, request);
+        offer.setUpdatedAt(request.getUpdatedAt() != null ? request.getUpdatedAt() : LocalDateTime.now());
+
         return offerMapper.toOfferResponse(offerRepository.save(offer));
     }
+
 
     public void deleteOffer(String id) {
         offerRepository.deleteById(id);

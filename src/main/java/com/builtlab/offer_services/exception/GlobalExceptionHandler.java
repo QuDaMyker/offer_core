@@ -67,4 +67,13 @@ public class GlobalExceptionHandler {
         apiResponse.setMessage(errorCode.getMessage());
         return ResponseEntity.badRequest().body(apiResponse);
     }
+    @ExceptionHandler(value = IllegalStateException.class)
+    ResponseEntity<ApiResponse> handlingIllegalStateException(IllegalStateException exception) {
+        ApiResponse apiResponse = new ApiResponse();
+
+        ErrorCode errorCode = ErrorCode.NOT_FOUND;
+        apiResponse.setCode(errorCode.getCode());
+        apiResponse.setMessage(errorCode.getMessage());
+        return ResponseEntity.badRequest().body(apiResponse);
+    }
 }
