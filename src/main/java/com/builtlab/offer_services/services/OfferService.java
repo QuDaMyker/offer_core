@@ -57,8 +57,13 @@ public class OfferService {
     public OfferResponse updateOffer(String id, OfferUpdateRequest request) {
         Offer offer = offerRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.NOT_FOUND));
-
         offerMapper.updateOffer(offer, request);
+
+        double originalPrice = offer.getOriginalPrice();
+        double discountPercentage = offer.getDiscountPercentage();
+        double discountedPrice = originalPrice - (originalPrice * discountPercentage / 100.0);
+
+        offer.setDiscountedPrice(discountedPrice);
         offer.setUpdatedAt(request.getUpdatedAt() != null ? request.getUpdatedAt() : LocalDateTime.now());
 
         return offerMapper.toOfferResponse(offerRepository.save(offer));
@@ -68,4 +73,11 @@ public class OfferService {
     public void deleteOffer(String id) {
         offerRepository.deleteById(id);
     }
+
+    public Offer calculateInfoOfOffer(Offer offer) {
+
+        return offer;
+    }
+
+
 }

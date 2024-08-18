@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.builtlab</groupId>
 	<artifactId>offer_services</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>offer_services</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>

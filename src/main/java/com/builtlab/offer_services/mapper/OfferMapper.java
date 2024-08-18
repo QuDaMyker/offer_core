@@ -5,6 +5,7 @@ import com.builtlab.offer_services.dto.request.OfferUpdateRequest;
 import com.builtlab.offer_services.dto.response.OfferResponse;
 import com.builtlab.offer_services.entity.Offer;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")

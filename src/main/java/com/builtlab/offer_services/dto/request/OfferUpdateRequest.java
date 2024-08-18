@@ -16,6 +16,5 @@ public class OfferUpdateRequest {
     String description;
     double discountPercentage;
     double originalPrice;
-    double discountedPrice;
     LocalDateTime updatedAt;
 }
